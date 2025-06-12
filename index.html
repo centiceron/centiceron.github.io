@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive GitHub Profile</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter for a clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* GitHub dark theme background */
+            color: #c9d1d9; /* GitHub text color */
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        /* Custom CSS for animations and transitions */
+        .section-header {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .section-header.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card, .skill-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition-delay: var(--delay); /* Use CSS variable for staggered effect */
+        }
+
+        .project-card.is-visible, .skill-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+        }
+
+        .hover-grow:hover {
+            transform: scale(1.03);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #58a6ff; /* GitHub link blue */
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Scroll progress bar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background-color: #58a6ff; /* GitHub link blue */
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- Scroll Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full bg-[#161b22] bg-opacity-90 z-50 shadow-lg backdrop-blur-sm p-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="#hero" class="text-2xl font-bold text-white">YourName</a>
+            <ul class="flex space-x-6">
+                <li><a href="#about" class="text-[#c9d1d9] hover:text-white nav-link">About</a></li>
+                <li><a href="#skills" class="text-[#c9d1d9] hover:text-white nav-link">Skills</a></li>
+                <li><a href="#projects" class="text-[#c9d1d9] hover:text-white nav-link">Projects</a></li>
+                <li><a href="#contact" class="text-[#c9d1d9] hover:text-white nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="h-screen flex items-center justify-center text-center bg-gradient-to-br from-[#0d1117] to-[#161b22] relative overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-10" style="background-image: url('https://placehold.co/1200x800/0d1117/161b22?text=Background+Pattern'); background-size: cover; background-position: center;"></div>
+        <div class="relative z-10 p-6 rounded-lg bg-gray-800 bg-opacity-50 backdrop-blur-sm">
+            <img src="https://placehold.co/150x150/58a6ff/ffffff?text=Avatar" alt="Profile Avatar" class="rounded-full mx-auto mb-6 border-4 border-blue-500 shadow-xl fade-in">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-4 animate-pulse-slow fade-in" style="animation-delay: 0.2s;">Hi, I'm Your Name!</h1>
+            <p class="text-xl md:text-2xl text-[#c9d1d9] mb-8 fade-in" style="animation-delay: 0.4s;">
+                A <span class="font-semibold text-blue-400">Passionate Developer</span> and Open Source Enthusiast.
+            </p>
+            <a href="#projects" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 hover-grow fade-in" style="animation-delay: 0.6s;">
+                View My Work
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 bg-[#0d1117]">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-4xl font-bold text-white mb-12 text-center section-header">About Me</h2>
+            <div class="bg-[#161b22] p-8 rounded-xl shadow-lg border border-gray-700 fade-in" style="animation-delay: 0.8s;">
+                <p class="text-lg mb-6 leading-relaxed">
+                    Hello! I'm Your Name, a software developer with a strong focus on building scalable and user-friendly web applications. My journey in tech started with a fascination for how things work, leading me to explore various programming languages and frameworks.
+                </p>
+                <p class="text-lg leading-relaxed">
+                    I have a passion for learning new technologies and contributing to open-source projects. When I'm not coding, you can find me exploring new hiking trails, reading a good book, or experimenting with new recipes in the kitchen. I believe in continuous growth and leveraging technology to solve real-world problems.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 bg-[#0d1117]">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-4xl font-bold text-white mb-12 text-center section-header">My Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Staggered animation delay using custom properties -->
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.1s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">JavaScript</h3>
+                    <p class="text-gray-400">Frontend & Backend</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.2s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">React.js</h3>
+                    <p class="text-gray-400">UI Development</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.3s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">Python</h3>
+                    <p class="text-gray-400">Data Science & Web</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.4s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">Node.js</h3>
+                    <p class="text-gray-400">Backend API's</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.5s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">HTML & CSS</h3>
+                    <p class="text-gray-400">Web Standards</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.6s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">Tailwind CSS</h3>
+                    <p class="text-gray-400">Utility-First Styling</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.7s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">Git & GitHub</h3>
+                    <p class="text-gray-400">Version Control</p>
+                </div>
+                <div class="bg-[#161b22] p-6 rounded-lg text-center shadow-md border border-gray-700 skill-item hover-grow" style="--delay: 0.8s;">
+                    <h3 class="text-xl font-semibold text-white mb-2">Databases</h3>
+                    <p class="text-gray-400">SQL & NoSQL</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4 bg-[#0d1117]">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="text-4xl font-bold text-white mb-12 text-center section-header">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project Card 1 -->
+                <div class="bg-[#161b22] p-8 rounded-xl shadow-lg border border-gray-700 project-card hover-grow" style="--delay: 0.1s;">
+                    <img src="https://placehold.co/600x350/58a6ff/ffffff?text=Project+1" alt="Project 1" class="rounded-lg mb-6 w-full h-auto object-cover">
+                    <h3 class="text-2xl font-semibold text-white mb-3">Project Title One</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">
+                        A brief description of Project One, highlighting its key features and technologies used. This project demonstrates my skills in [Technology 1] and [Technology 2].
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-blue-700 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">React</span>
+                        <span class="bg-green-700 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">Node.js</span>
+                        <span class="bg-yellow-700 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">MongoDB</span>
+                    </div>
+                    <a href="https://github.com/yourusername/project-one" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition-colors duration-200">
+                        View on GitHub
+                    </a>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="bg-[#161b22] p-8 rounded-xl shadow-lg border border-gray-700 project-card hover-grow" style="--delay: 0.2s;">
+                    <img src="https://placehold.co/600x350/58a6ff/ffffff?text=Project+2" alt="Project 2" class="rounded-lg mb-6 w-full h-auto object-cover">
+                    <h3 class="text-2xl font-semibold text-white mb-3">Project Title Two</h3>
+                    <p class="text-gray-400 mb-4 leading-relaxed">
+                        Another project demonstrating my capabilities. This one involved [specific challenge] and utilized [Technology 3] and [Technology 4] to achieve its goals.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-purple-700 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">Python</span>
+                        <span class="bg-red-700 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">Django</span>
+                        <span class="bg-gray-700 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">PostgreSQL</span>
+                    </div>
+                    <a href="https://github.com/yourusername/project-two" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition-colors duration-200">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-[#0d1117]">
+        <div class="container mx-auto max-w-3xl text-center">
+            <h2 class="text-4xl font-bold text-white mb-12 section-header">Get In Touch</h2>
+            <div class="bg-[#161b22] p-8 rounded-xl shadow-lg border border-gray-700 fade-in" style="animation-delay: 0.9s;">
+                <p class="text-lg text-gray-400 mb-8 leading-relaxed">
+                    Have a question, a project idea, or just want to say hi? Feel free to reach out!
+                </p>
+                <div class="space-y-4">
+                    <a href="mailto:your.email@example.com" class="inline-block w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 hover-grow">
+                        Email Me
+                    </a>
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" class="inline-block w-full md:w-auto bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 hover-grow">
+                        Connect on LinkedIn
+                    </a>
+                    <a href="https://github.com/yourusername" target="_blank" class="inline-block w-full md:w-auto bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 hover-grow">
+                        Follow on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#161b22] py-8 text-center text-gray-500">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Your Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for Scroll Animations
+        const sections = document.querySelectorAll('section');
+        const sectionHeaders = document.querySelectorAll('.section-header');
+        const projectCards = document.querySelectorAll('.project-card');
+        const skillItems = document.querySelectorAll('.skill-item');
+        const fadeInElements = document.querySelectorAll('.fade-in');
+
+        const observerOptions = {
+            root: null, /* relative to the viewport */
+            rootMargin: '0px',
+            threshold: 0.2 /* 20% of the element must be visible */
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Stop observing once element is visible to avoid re-triggering
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Apply observer to all animatable elements
+        sectionHeaders.forEach(el => observer.observe(el));
+        projectCards.forEach(el => observer.observe(el));
+        skillItems.forEach(el => observer.observe(el));
+        fadeInElements.forEach(el => observer.observe(el));
+
+        // Scroll progress bar functionality
+        const progressBar = document.getElementById('progressBar');
+
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const progress = (scrollPosition / totalHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        // Initial check for elements already in view on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Manually trigger for elements already in viewport
+            sectionHeaders.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
+                    el.classList.add('is-visible');
+                }
+            });
+            projectCards.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
+                    el.classList.add('is-visible');
+                }
+            });
+            skillItems.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
+                    el.classList.add('is-visible');
+                }
+            });
+            fadeInElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
+                    el.classList.add('is-visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
